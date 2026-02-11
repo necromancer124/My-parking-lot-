@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <time.h>
 #include <string.h>
+#include <ctype.h>
 
 #ifdef _WIN32
     #include <windows.h>
@@ -19,7 +20,9 @@
 int ROWX;
 int ROWY;
 
-int currHour = 6;
+int START_HOUR = 6;
+int END_HOUR = 22;
+int currHour;
 int profit = 0;
 int PRICE = 1;       // price per hour
 int FINE = 100;      // fine for dragged car
@@ -52,7 +55,7 @@ void saveSettings()
 {
     FILE *f = fopen("settings.txt", "w");
     if (!f) return;
-    fprintf(f, "%d %d %d %d", ROWX, ROWY, PRICE, FINE);
+    fprintf(f, "%d %d %d %d %d %d", ROWX, ROWY, PRICE, FINE, START_HOUR, END_HOUR);
     fclose(f);
 }
 
@@ -60,8 +63,9 @@ int loadSettings()
 {
     FILE *f = fopen("settings.txt", "r");
     if (!f) return 0;
-    if (fscanf(f, "%d %d %d %d", &ROWX, &ROWY, &PRICE, &FINE) != 4 ||
-        ROWX <= 0 || ROWY <= 0 || PRICE < 0 || FINE < 0)
+    if (fscanf(f, "%d %d %d %d %d %d", &ROWX, &ROWY, &PRICE, &FINE, &START_HOUR, &END_HOUR) != 6 ||
+        ROWX <= 0 || ROWY <= 0 || PRICE < 0 || FINE < 0 ||
+        START_HOUR < 0 || START_HOUR > 23 || END_HOUR <= START_HOUR || END_HOUR > 24)
     {
         fclose(f);
         return 0;
@@ -83,8 +87,8 @@ void showHelp()
 
     printf("\033[36m=== PARKING SYSTEM HELP ===\033[0m\n\n");
 
-    printf("\033[33msimulate\033[0m  - Start parking simulation (6:00 to 22:00)\n");
-    printf("\033[33msettings\033[0m  - Change rows, columns, price, and drag fine\n");
+    printf("\033[33msimulate\033[0m  - Start parking simulation (%d:00 to %d:00)\n", START_HOUR, END_HOUR);
+    printf("\033[33msettings\033[0m  - Change rows, columns, price, drag fine, and start/end hours\n");
     printf("\033[33mreset\033[0m     - Delete saved settings file\n");
     printf("\033[33mhelp\033[0m      - Show this help screen\n");
     printf("\033[33mquit\033[0m      - Exit program\n\n");
@@ -93,12 +97,17 @@ void showHelp()
     printf("- Cars randomly enter or exit\n");
     printf("- Disabled cars use disabled spots\n");
     printf("- Green = Free/Disabled\n");
-    printf("- Red   = Occupied\n");
-    printf("- Parking cost: %d per hour\n", PRICE);
-    printf("- Drag fine: %d per car\n\n", FINE);
+    printf("- Red   = Occupied\n\n");
+
+    printf("Current Settings:\n");
+    printf("- Rows: %d\n", ROWX);
+    printf("- Columns: %d\n", ROWY);
+    printf("- Parking cost per hour: %d\n", PRICE);
+    printf("- Drag fine: %d\n", FINE);
+    printf("- Simulation start hour: %d:00\n", START_HOUR);
+    printf("- Simulation end hour: %d:00\n\n", END_HOUR);
 
     printf("Press ENTER to return...");
-    getchar();
     getchar();
 }
 
@@ -258,11 +267,11 @@ int keyPressed()
 /* ---------------- SIMULATION ---------------- */
 void simulate()
 {
-    currHour = 6;
+    currHour = START_HOUR;
     profit = 0;
     start(parckLot);
 
-    while (currHour < 22)
+    while (currHour < END_HOUR)
     {
         system(CLEAR);
         printf("\nCurrent hour: %d\n", currHour);
@@ -287,8 +296,8 @@ void simulate()
         if (keyPressed())
             break;
 
-            int delay = 1000 + rand() % 3001; 
-            sleep_ms(delay);
+        int delay = 1000 + rand() % 3001; 
+        sleep_ms(delay);
     }
 
     grar(parckLot);
@@ -311,11 +320,48 @@ int main(void)
         scanf("%d", &PRICE);
         printf("Enter drag fine amount: ");
         scanf("%d", &FINE);
+        printf("Enter simulation start hour (0-23): ");
+        scanf("%d", &START_HOUR);
+        printf("Enter simulation end hour (1-24): ");
+        scanf("%d", &END_HOUR);
 
-        if (ROWX <= 0) ROWX = 5;
-        if (ROWY <= 0) ROWY = 10;
-        if (PRICE < 0) PRICE = 1;
-        if (FINE < 0) FINE = 100;
+        if (ROWX <= 0) {
+    printf("Invalid rows value. Setting to default: 5\n");
+    ROWX = 5;
+        sleep_ms(2000);
+
+}
+if (ROWY <= 0) {
+    printf("Invalid columns value. Setting to default: 10\n");
+    ROWY = 10;
+        sleep_ms(2000);
+
+}
+if (PRICE < 0) {
+    printf("Invalid price value. Setting to default: 1\n");
+    PRICE = 1;
+        sleep_ms(2000);
+
+}
+if (FINE < 0) {
+    printf("Invalid drag fine value. Setting to default: 100\n");
+    FINE = 100;
+        sleep_ms(2000);
+
+}
+if (START_HOUR < 0 || START_HOUR > 23) {
+    printf("Invalid start hour. Setting to default: 6\n");
+    START_HOUR = 6;
+        sleep_ms(2000);
+
+}
+if (END_HOUR <= START_HOUR || END_HOUR > 24) {
+    printf("Invalid end hour. Setting to default:%d\n", START_HOUR+1);
+    END_HOUR = START_HOUR+1;
+        sleep_ms(2000);
+
+}
+
 
         saveSettings();
     }
@@ -324,14 +370,20 @@ int main(void)
     getchar(); // clear leftover newline
 
     while (1)
-    {
-        printf("\nType 'simulate', 'settings', 'reset', 'help', or 'quit': ");
-        scanf("%s", command);
-        getchar(); // clear newline
+{
+    printf("\nType 'simulate', 'settings', 'reset', 'help', or 'quit': ");
+    scanf("%s", command);
+    getchar(); // clear newline
 
-        if (strcmp(command, "help") == 0)
-            showHelp();
-        else if (strcmp(command, "settings") == 0)
+    // convert to lowercase for safety (optional)
+    for(int i = 0; command[i]; i++) 
+        command[i] = tolower(command[i]);
+
+    if (strncmp(command, "h", 1) == 0)             // help or h
+        showHelp();
+    else if (strncmp(command, "s", 1) == 0)        // simulate or settings
+    {
+        if (strcmp(command, "settings") == 0 || strcmp(command, "set") == 0)
         {
             freeParking();
 
@@ -339,33 +391,41 @@ int main(void)
             scanf("%d", &ROWX);
             printf("Enter new columns: ");
             scanf("%d", &ROWY);
-            printf("Enter new price per hour: ");
+            printf("Enter price per hour: ");
             scanf("%d", &PRICE);
-            printf("Enter new drag fine amount: ");
+            printf("Enter drag fine amount: ");
             scanf("%d", &FINE);
+            printf("Enter simulation start hour (0-23): ");
+            scanf("%d", &START_HOUR);
+            printf("Enter simulation end hour (1-24): ");
+            scanf("%d", &END_HOUR);
 
             if (ROWX <= 0) ROWX = 5;
             if (ROWY <= 0) ROWY = 10;
             if (PRICE < 0) PRICE = 1;
             if (FINE < 0) FINE = 100;
+            if (START_HOUR < 0 || START_HOUR > 23) START_HOUR = 6;
+            if (END_HOUR <= START_HOUR || END_HOUR > 24) END_HOUR = 22;
 
             allocateParking();
             saveSettings();
 
             printf("Settings updated.\n");
         }
-        else if (strcmp(command, "simulate") == 0)
+        else                                        // simulate or sim
             simulate();
-        else if (strcmp(command, "reset") == 0)
-            resetSettings();
-        else if (strcmp(command, "quit") == 0)
-        {
-            freeParking();
-            break;
-        }
-        else
-            printf("Unknown command.\n");
     }
-    
+    else if (strncmp(command, "r", 1) == 0)        // reset or r
+        resetSettings();
+    else if (strncmp(command, "q", 1) == 0)        // quit or q
+    {
+        freeParking();
+        break;
+    }
+    else
+        printf("Unknown command.\n");
+}
+
+
     return 0;
 }
