@@ -1,88 +1,185 @@
-Parking Lot Simulation
+## 🚗 Parking Lot Simulation (C)
 
-A console-based parking lot simulator written in C. This project allows you to simulate cars entering and exiting a parking lot, including special handling for disabled spaces. The simulation tracks parking payments, fines for improperly parked cars, and supports customizable settings.
+A console-based parking lot simulator written in C that models real-time vehicle flow, payments, and enforcement. The system supports disabled parking logic, configurable pricing, fines, and persistent settings.
 
-Features
+---
 
-Dynamic Parking Lot: Set the number of rows and columns.
+## ✨ Features
 
-Disabled Spaces: Automatically assigns a percentage of spots as disabled.
+### 🅿️ Dynamic Parking Lot
 
-Car Simulation: Cars randomly enter and exit the lot. Disabled cars use disabled spots.
+* Configure the number of **rows** and **columns**
+* Flexible lot size to fit different scenarios
 
-Payment System: Tracks parking fees per hour.
+### ♿ Disabled Parking Support
 
-Drag Fines: Cars left in the wrong spot are dragged and fined.
+* Automatically assigns a percentage of spaces as disabled
+* 25% chance that entering cars are disabled
+* Disabled cars prioritize disabled spots
 
-Real-Time Simulation: Simulation updates in real time with random delays.
+### 💰 Payment System
 
-Non-Blocking Stop: Press any key to stop the simulation and return to the menu.
+* Hourly parking rate (configurable)
+* Automatic fee calculation on exit
+* Fine system for improperly parked vehicles
 
-Persistent Settings: Save and load parking lot configuration, price, and fine.
+### 🚓 Enforcement (Drag & Fine)
 
-Colored Console Display: Green = free/disabled, Red = occupied.
+* Cars parked in the wrong spot are:
 
-Help Menu: Instructions for using the program.
+  * Dragged out
+  * Fined according to configured amount
 
-Getting Started
-Prerequisites
+### ⏱ Real-Time Simulation
 
-C compiler (GCC recommended)
+* Operates from **06:00 to 22:00**
+* Random car entry/exit events
+* 1–4 second randomized delay between updates
+* Non-blocking input — press any key to stop simulation
 
-Windows, Linux, or macOS terminal
+### 💾 Persistent Configuration
 
-Build
-gcc -o parkingLot parckingLot.c
+* Settings saved to `settings.txt`
+* Automatically loaded at startup
 
-Run
-./parkingLot       # Linux/macOS
-parkingLot.exe     # Windows
+### 🎨 Colored Console Output
 
-Usage
+* 🟢 Green → Free or disabled spot
+* 🔴 Red → Occupied spot
 
-When you run the program, you can use the following commands:
+### 📘 Built-in Help Menu
 
-Command	Description
-simulate	Start the parking lot simulation from 6:00 to 22:00
-settings	Change rows, columns, parking price, and drag fine
-reset	Delete saved settings file
-help	Show help menu
-quit	Exit the program
+* Command list
+* Usage explanation
 
-During the simulation:
+---
 
-Cars randomly enter or exit.
+## 🛠 Getting Started
 
-Press any key to stop the simulation and return to the menu.
+### Prerequisites
 
-Configuration
+* GCC (recommended) or any C compiler
+* Windows, Linux, or macOS terminal
 
-Settings are stored in settings.txt and include:
+---
 
-Number of rows (ROWX)
+## 🔧 Build
 
-Number of columns (ROWY)
+```bash
+gcc -o parkingLot parkingLot.c
+```
 
-Parking price per hour (PRICE)
+---
 
-Fine amount for dragged cars (FINE)
+## ▶️ Run
 
-These settings are loaded automatically when the program starts.
+### Linux / macOS
 
-Simulation Behavior
+```bash
+./parkingLot
+```
 
-Green spots: Free or disabled
+### Windows
 
-Red spots: Occupied
+```bash
+parkingLot.exe
+```
 
-Cars enter randomly with a 25% chance of being disabled.
+---
 
-Exit payments are calculated based on the current hour and the hourly price.
+## 🖥 Available Commands
 
-Cars left in the wrong spot are dragged and fined.
+| Command    | Description                              |
+| ---------- | ---------------------------------------- |
+| `simulate` | Start simulation (06:00–22:00)           |
+| `settings` | Configure rows, columns, price, and fine |
+| `reset`    | Delete saved settings file               |
+| `help`     | Show help menu                           |
+| `quit`     | Exit program                             |
 
-Random delay of 1–4 seconds between updates to make the simulation dynamic.
+---
 
-License
+## 🎮 During Simulation
+
+* Cars randomly enter or exit
+* Disabled cars use disabled spaces
+* Payment is calculated on exit
+* Improper parking results in drag + fine
+* Press **any key** to stop simulation and return to menu
+
+---
+
+## ⚙️ Configuration File
+
+Settings are stored in:
+
+```
+settings.txt
+```
+
+### Stored Parameters
+
+| Parameter | Description            |
+| --------- | ---------------------- |
+| `ROWX`    | Number of rows         |
+| `ROWY`    | Number of columns      |
+| `PRICE`   | Parking price per hour |
+| `FINE`    | Drag fine amount       |
+
+---
+
+## 🧠 Simulation Logic
+
+* Randomized vehicle generation
+
+* 25% probability of disabled vehicle
+
+* Real-time hour tracking
+
+* Automatic fee calculation:
+
+  ```
+  payment = hours_parked × PRICE
+  ```
+
+* Fine applied if parked incorrectly:
+
+  ```
+  total = payment + FINE
+  ```
+
+---
+
+## 📂 Project Structure
+
+```
+parkingLot.c
+settings.txt
+README.md
+```
+
+---
+
+## 🚀 Future Improvements (Optional Ideas)
+
+* Vehicle ID tracking
+* Revenue statistics summary
+* Multi-level parking support
+* File-based logging system
+* Graphical interface (SDL or ncurses)
+
+---
+
+## 📜 License
 
 This project is open-source and free to use.
+
+---
+
+If you would like, I can also create:
+
+* A more professional “portfolio-ready” README
+* A version with badges (build status, language, license)
+* A short project description optimized for recruiters
+* A demo GIF section layout
+* A clean academic submission version
