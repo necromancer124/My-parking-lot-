@@ -32,7 +32,6 @@ A console-based parking lot simulator written in C that models real-time vehicle
 
 ### ⏱ Real-Time Simulation
 
-* Operates from **06:00 to 22:00**
 * Random car entry/exit events
 * 1–4 second randomized delay between updates
 * Non-blocking input — press any key to stop simulation
