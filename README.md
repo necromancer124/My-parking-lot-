@@ -91,7 +91,7 @@ parkingLot.exe
 
 | Command    | Description                              |
 | ---------- | ---------------------------------------- |
-| `simulate` | Start simulation (06:00–22:00)           |
+| `simulate` | Start simulation           |
 | `settings` | Configure rows, columns, price, and fine |
 | `reset`    | Delete saved settings file               |
 | `help`     | Show help menu                           |
