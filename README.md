@@ -172,13 +172,3 @@ README.md
 ## 📜 License
 
 This project is open-source and free to use.
-
----
-
-If you would like, I can also create:
-
-* A more professional “portfolio-ready” README
-* A version with badges (build status, language, license)
-* A short project description optimized for recruiters
-* A demo GIF section layout
-* A clean academic submission version
