@@ -1,0 +1,15 @@
+Date: 2026-04-28 11:25 | Car: 1027120 | Payment: 5 | Type: Dragged
+Date: 2026-04-28 11:25 | Car: 1002661 | Payment: 5 | Type: Dragged
+Date: 2026-04-28 11:25 | Car: 1021682 | Payment: 5 | Type: Dragged
+Date: 2026-04-28 11:25 | Car: 1008270 | Payment: 5 | Type: Dragged
+Date: 2026-04-28 11:38 | Car: 1005979 | Payment: 100 | Type: Dragged
+Date: 2026-04-28 11:38 | Car: 1014524 | Payment: 100 | Type: Dragged
+Date: 2026-04-28 11:39 | Car: 1003337 | Payment: 202 | Type: Exit
+Date: 2026-04-28 11:39 | Car: 1017431 | Payment: 200 | Type: Dragged
+Date: 2026-04-28 11:39 | Car: 1027988 | Payment: 200 | Type: Dragged
+Date: 2026-04-28 11:39 | Car: 1026483 | Payment: 200 | Type: Dragged
+Date: 2026-04-28 11:39 | Car: 1017557 | Payment: 200 | Type: Dragged
+Date: 2026-04-28 11:39 | Car: 1012885 | Payment: 200 | Type: Dragged
+Date: 2026-04-28 11:39 | Car: 1022911 | Payment: 200 | Type: Dragged
+Date: 2026-04-28 11:41 | Car: 1012919 | Payment: 5 | Type: Dragged
+Date: 2026-04-28 11:41 | Car: 1018052 | Payment: 10 | Type: Dragged
