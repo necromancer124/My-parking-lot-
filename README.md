@@ -1,174 +1,38 @@
-## 🚗 Parking Lot Simulation (C)
+# 🚗 Parking Lot Simulation
+A cross-platform Terminal User Interface (TUI) simulation of a smart parking lot system, featuring dynamic car entry/exit, disabled spot management, and revenue tracking.
 
-A console-based parking lot simulator written in C that models real-time vehicle flow, payments, and enforcement. The system supports disabled parking logic, configurable pricing, fines, and persistent settings.
-
----
+## 🚀 Overview
+This project simulates the daily operations of a parking lot. It uses a grid-based system to track available spaces, manage priority parking for disabled vehicles, and calculate profit based on hourly rates and fines for illegally dragged cars.
 
 ## ✨ Features
+- **Dynamic Simulation**: Cars enter and exit based on random probability, simulating real-world traffic.
+- **Priority Parking**: Dedicated spots for disabled vehicles with strict enforcement.
+- **Financial Tracking**: Calculates total profit based on parking duration and fines.
+- **TUI Experience**: A clean, interactive terminal menu with keyboard navigation and color-coded status grids.
+- **Persistence**: Saves your parking lot configuration (rows, columns, prices) to a local file.
+- **Audit Log**: Maintains a `carsHistory.txt` log of every payment and event.
 
-### 🅿️ Dynamic Parking Lot
-
-* Configure the number of **rows** and **columns**
-* Flexible lot size to fit different scenarios
-
-### ♿ Disabled Parking Support
-
-* Automatically assigns a percentage of spaces as disabled
-* 25% chance that entering cars are disabled
-* Disabled cars prioritize disabled spots
-
-### 💰 Payment System
-
-* Hourly parking rate (configurable)
-* Automatic fee calculation on exit
-* Fine system for improperly parked vehicles
-
-### 🚓 Enforcement (Drag & Fine)
-
-* Cars parked in the wrong spot are:
-
-  * Dragged out
-  * Fined according to configured amount
-
-### ⏱ Real-Time Simulation
-
-* Random car entry/exit events
-* 1–4 second randomized delay between updates
-* Non-blocking input — press any key to stop simulation
-
-### 💾 Persistent Configuration
-
-* Settings saved to `settings.txt`
-* Automatically loaded at startup
-
-### 🎨 Colored Console Output
-
-* 🟢 Green → Free or disabled spot
-* 🔴 Red → Occupied spot
-
-### 📘 Built-in Help Menu
-
-* Command list
-* Usage explanation
-
----
-
-## 🛠 Getting Started
+## 🛠️ Build & Run
 
 ### Prerequisites
+- GCC Compiler
+- Make (for Linux/macOS)
 
-* GCC (recommended) or any C compiler
-* Windows, Linux, or macOS terminal
-
----
-
-## 🔧 Build
-
+### Building (Linux/macOS/Windows with MinGW)
 ```bash
-gcc -o parkingLot parkingLot.c
+make
 ```
 
----
-
-## ▶️ Run
-
-### Linux / macOS
-
+### Running
 ```bash
-./parkingLot
+./parking_lot
 ```
 
-### Windows
-
-```bash
-parkingLot.exe
-```
-
----
-
-## 🖥 Available Commands
-
-| Command    | Description                              |
-| ---------- | ---------------------------------------- |
-| `simulate` | Start simulation           |
-| `settings` | Configure rows, columns, price, and fine |
-| `reset`    | Delete saved settings file               |
-| `help`     | Show help menu                           |
-| `quit`     | Exit program                             |
-
----
-
-## 🎮 During Simulation
-
-* Cars randomly enter or exit
-* Disabled cars use disabled spaces
-* Payment is calculated on exit
-* Improper parking results in drag + fine
-* Press **any key** to stop simulation and return to menu
-
----
-
-## ⚙️ Configuration File
-
-Settings are stored in:
-
-```
-settings.txt
-```
-
-### Stored Parameters
-
-| Parameter | Description            |
-| --------- | ---------------------- |
-| `ROWX`    | Number of rows         |
-| `ROWY`    | Number of columns      |
-| `PRICE`   | Parking price per hour |
-| `FINE`    | Drag fine amount       |
-
----
-
-## 🧠 Simulation Logic
-
-* Randomized vehicle generation
-
-* 25% probability of disabled vehicle
-
-* Real-time hour tracking
-
-* Automatic fee calculation:
-
-  ```
-  payment = hours_parked × PRICE
-  ```
-
-* Fine applied if parked incorrectly:
-
-  ```
-  total = payment + FINE
-  ```
-
----
-
-## 📂 Project Structure
-
-```
-parkingLot.c
-settings.txt
-README.md
-```
-
----
-
-## 🚀 Future Improvements (Optional Ideas)
-
-* Vehicle ID tracking
-* Revenue statistics summary
-* Multi-level parking support
-* File-based logging system
-* Graphical interface (SDL or ncurses)
-
----
+## 🕹️ How it Works
+- **Green Spots**: Free or Disabled spots.
+- **Red Spots**: Occupied spaces.
+- **Simulation**: Press "Simulate" to watch the lot fill and empty in real-time.
+- **Management**: Use the settings menu to customize the size and pricing of your lot.
 
 ## 📜 License
-
-This project is open-source and free to use.
+This project is licensed under the MIT License.
